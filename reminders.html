@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reminders</title>
+</head>
+<body>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let goals = JSON.parse(localStorage.getItem('goals')) || [];
+
+        let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+
+        const quotes = [
+            "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+            "The only way to do great work is to love what you do.",
+            "Don't watch the clock; do what it does. Keep going.",
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+        if (goals.length === 0) {
+            // if no goals are set, just add the quote reminder
+            reminders.push({ message: randomQuote, seen: false });
+        } else {
+            // iterate through each goal and create a reminder for goals that have not had a reminder set
+            reminders.push({ message: randomQuote, seen: false });
+            goals.forEach(goal => {
+                if (!goal.reminderSet) {
+
+                    reminders.push({ message: `Don't forget your goal: ${goal.exerciseType} - ${goal.targetCount} today!`, seen: false });
+                    // mark the goal as having a reminder set
+                    goal.reminderSet = true;
+                }
+            });
+
+            // after the loop, update the goals in local storage to include the updated reminderSet flags
+            localStorage.setItem('goals', JSON.stringify(goals));
+        }
+        
+        localStorage.setItem('reminders', JSON.stringify(reminders));
+
+        alert('Reminders set successfully');
+
+        // navigate to the dashboard
+        window.location.href = 'dashboard.html'; 
+    });
+</script>
+</html>
