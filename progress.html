@@ -16,32 +16,32 @@
 <body class="bg-gray-50 dark:bg-gray-900">
     <header class="bg-white border-b border-gray-200 dark:bg-gray-900">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-            <a href="index.html" class="flex items-center">
+            <a href="index.html" class="flex items-center text-lg font-semibold text-gray-800 dark:text-white">
                 <span class="material-symbols-outlined mx-2">sports_basketball</span>
                 Fitness Tracker
             </a>
         </div>
     </header>
-    <div class="bg-white p-4 shadow-md mb-4"> 
+    <div class="bg-white p-4 shadow-md mb-4">
         <div class="container mx-auto">
-            <ul class="flex space-x-4">
-                <li><a href="dashboard.html" class="px-3 py-1 bg-gray-100 text-blue-600 rounded hover:bg-gray-200">Dashboard</a></li>
-                <li><a href="exercise.html" class="px-3 py-1 bg-gray-100 text-blue-600 rounded hover:bg-gray-200">Exercise</a></li>
-                <li><a href="progress.html" class="px-3 py-1 bg-gray-100 text-blue-600 rounded hover:bg-gray-200">Progress</a></li>
-                <li><a href="goals.html" class="px-3 py-1 bg-gray-100 text-blue-600 rounded hover:bg-gray-200">Goals</a></li>
-                <li><a href="reminders.html" class="px-3 py-1 bg-gray-100 text-blue-600 rounded hover:bg-gray-200">Reminders</a></li>
-                <li><a href="notifications.html" class="px-3 py-1 bg-gray-100 text-blue-600 rounded hover:bg-gray-200">Notifications</a></li>
+            <ul class="flex space-x-4 text-gray-700 dark:text-gray-300">
+                <li><a href="dashboard.html" class="px-3 py-2 rounded hover:bg-gray-200">Dashboard</a></li>
+                <li><a href="exercise.html" class="px-3 py-2 rounded hover:bg-gray-200">Exercise</a></li>
+                <li><a href="progress.html" class="px-3 py-2 rounded hover:bg-gray-200">Progress</a></li>
+                <li><a href="goals.html" class="px-3 py-2 rounded hover:bg-gray-200">Goals</a></li>
+                <li><a href="reminders.html" class="px-3 py-2 rounded hover:bg-gray-200">Reminders</a></li>
+                <li><a href="notifications.html" class="px-3 py-2 rounded hover:bg-gray-200">Notifications</a></li>
             </ul>
         </div>
     </div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table id="progress-table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table id="progress-table" class="w-full text-sm text-left text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800">
+            <caption class="p-5 text-lg font-semibold text-left text-gray-900 dark:text-white">
                 Exercise Progress
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Track your exercise progress over time.</p>
+                <p class="mt-1 text-sm font-normal">Track your exercise progress over time.</p>
             </caption>
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">Date</th>
                     <th scope="col" class="px-6 py-3">Stairs Climbed</th>
@@ -57,67 +57,66 @@
         </table>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Retrieve the exercise logs from localStorage
+            const exerciseLogs = JSON.parse(localStorage.getItem('exerciseLogs')) || [];
+
+            // Get a reference to the table body where the rows will be injected
+            const tbody = document.getElementById('progress-body');
+
+            // Iterate over each log and create a table row for each one
+            exerciseLogs.forEach(log => {
+                const tr = document.createElement('tr');
+
+                // Format the date
+                const date = new Date(log.timestamp);
+                const formattedDate = date.toLocaleDateString();
+
+                // Create table data for each property
+                // And assign the styling class to each td element
+                const tdDate = document.createElement('td');
+                tdDate.textContent = formattedDate;
+                tdDate.className = 'px-6 py-4';
+                tr.appendChild(tdDate);
+
+                // Repeat the same for each td element
+                const tdStairs = document.createElement('td');
+                tdStairs.textContent = log.stairs_climbed || 0;
+                tdStairs.className = 'px-6 py-4';
+                tr.appendChild(tdStairs);
+
+                const tdSteps = document.createElement('td');
+                tdSteps.textContent = log.steps_taken || 0;
+                tdSteps.className = 'px-6 py-4';
+                tr.appendChild(tdSteps);
+
+                const tdPushups = document.createElement('td');
+                tdPushups.textContent = log.pushups || 0;
+                tdPushups.className = 'px-6 py-4';
+                tr.appendChild(tdPushups);
+
+                const tdSitups = document.createElement('td');
+                tdSitups.textContent = log.sit_ups || 0;
+                tdSitups.className = 'px-6 py-4';
+                tr.appendChild(tdSitups);
+
+                const tdPullups = document.createElement('td');
+                tdPullups.textContent = log.pull_ups || 0;
+                tdPullups.className = 'px-6 py-4';
+                tr.appendChild(tdPullups);
+
+                const tdSquats = document.createElement('td');
+                tdSquats.textContent = log.squats || 0;
+                tdSquats.className = 'px-6 py-4';
+                tr.appendChild(tdSquats);
+
+                // Append the created row to the table body
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
 
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Retrieve the exercise logs from localStorage
-        const exerciseLogs = JSON.parse(localStorage.getItem('exerciseLogs')) || [];
-
-        // Get a reference to the table body where the rows will be injected
-        const tbody = document.getElementById('progress-body');
-
-        // Iterate over each log and create a table row for each one
-        exerciseLogs.forEach(log => {
-            const tr = document.createElement('tr');
-            
-            // Format the date
-            const date = new Date(log.timestamp);
-            const formattedDate = date.toLocaleDateString(); 
-            
-            // Create table data for each property
-            // And assign the styling class to each td element
-            const tdDate = document.createElement('td');
-            tdDate.textContent = formattedDate;
-            tdDate.className = 'px-6 py-4'; // Assign class to the element
-            tr.appendChild(tdDate);
-            
-            // Repeat the same for each td element
-            const tdStairs = document.createElement('td');
-            tdStairs.textContent = log.stairs_climbed || 0;
-            tdStairs.className = 'px-6 py-4';
-            tr.appendChild(tdStairs);
-            
-            const tdSteps = document.createElement('td');
-            tdSteps.textContent = log.steps_taken || 0;
-            tdSteps.className = 'px-6 py-4';
-            tr.appendChild(tdSteps);
-            
-            const tdPushups = document.createElement('td');
-            tdPushups.textContent = log.pushups || 0;
-            tdPushups.className = 'px-6 py-4';
-            tr.appendChild(tdPushups);
-            
-            const tdSitups = document.createElement('td');
-            tdSitups.textContent = log.sit_ups || 0;
-            tdSitups.className = 'px-6 py-4';
-            tr.appendChild(tdSitups);
-            
-            const tdPullups = document.createElement('td');
-            tdPullups.textContent = log.pull_ups || 0;
-            tdPullups.className = 'px-6 py-4';
-            tr.appendChild(tdPullups);
-            
-            const tdSquats = document.createElement('td');
-            tdSquats.textContent = log.squats || 0;
-            tdSquats.className = 'px-6 py-4';
-            tr.appendChild(tdSquats);
-            
-            // Append the created row to the table body
-            tbody.appendChild(tr);
-        });
-    });
-
-</script>
 
 </html>
